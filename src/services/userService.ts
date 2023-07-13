@@ -3,7 +3,7 @@ import { API_URL } from '../config';
 import { Alert } from 'react-native';
 
 export const login = async (username: string): Promise<User> => {
-    const response = await fetch(`${API_URL}/login`, {
+    const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -11,9 +11,11 @@ export const login = async (username: string): Promise<User> => {
         body: JSON.stringify({ username })
     });
 
-    if (response.status !== 200) {
+    if (res.status !== 200) {
         Alert.alert('Error while signing in');
+    } else {
+        const user = await res.json();
+        console.log(user);
     }
 
-    console.log(response)
 }
